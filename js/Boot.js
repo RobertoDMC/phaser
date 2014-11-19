@@ -41,8 +41,8 @@ BasicGame.Boot.prototype = {
 
   create: function () {
 
-    //this.state.start('Preloader');
-    this.state.start('Game');
+    this.state.start('Preloader');
+    //this.state.start('Game');
 
   }
 
