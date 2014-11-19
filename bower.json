@@ -1,0 +1,20 @@
+{
+  "name": "ageibert",
+  "version": "0.0.1",
+  "authors": [
+    "Andreas Geibert <geibi@geibi.de>"
+  ],
+  "description": "phaser test project",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "photonstorm/phaser#~2.1.3"
+  }
+}
