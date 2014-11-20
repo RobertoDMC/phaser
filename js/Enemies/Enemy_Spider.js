@@ -17,7 +17,7 @@ BasicGame.Enemy_Spider.prototype.create = function (x, y) {
 };
 
 BasicGame.Enemy_Spider.prototype.update = function () {
-  this.damage(1);
+  //this.damage(1);
   console.log(this.screenName + " health: " + this.health);
   this.parentUpdate();
 };

@@ -16,7 +16,9 @@ BasicGame.Enemy_Skeleton.prototype.create = function (x, y) {
 };
 
 BasicGame.Enemy_Skeleton.prototype.update = function () {
-  this.damage(1);
+  //this.damage(1);
+  this.x += 5;
+
   console.log(this.screenName + " health: " + this.health);
   this.parentUpdate();
 };

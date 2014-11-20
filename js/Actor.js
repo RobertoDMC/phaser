@@ -2,6 +2,7 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.game = game;
   this.health = 0;
   Phaser.Sprite.call(this, this.game, x, y, imageRef);
+  this.game.physics.arcade.enable(this);
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);

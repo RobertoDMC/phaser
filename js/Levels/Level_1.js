@@ -1,6 +1,7 @@
 BasicGame.Level_1 = function (game) {
   this.game = game;
   this.levelName = "Level 1";
+  this.levelNumber = 1;
 };
 BasicGame.Level_1.prototype = Object.create(BasicGame.Level.prototype);
 BasicGame.Level_1.prototype.constructor = BasicGame.Level_1;
