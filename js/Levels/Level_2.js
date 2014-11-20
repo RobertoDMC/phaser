@@ -22,18 +22,14 @@ BasicGame.Level_2.prototype.create = function(){
 BasicGame.Level_2.prototype.update = function(){
 
   //physics
-  //this.game.physics.arcade.collide(this.game.player.sprite, this.enemiesGroup);
   //collision events
   this.game.physics.arcade.overlap(this.game.player.sprite, this.enemiesGroup, this.playerTouchingEnemy, null, this);
 
   this.parentUpdate();
 
-  /*
-  this.game.player.incrementScore(10);
-  if(this.game.player.getScore() > 2000){
-    this.game.state.start("MainMenu");
-  }
-  */
+  //TODO: camera how to exactly?
+  //this.game.camera.follow(this.game.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
+
 };
 
 BasicGame.Level_2.prototype.shutdown= function() {
