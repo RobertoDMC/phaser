@@ -4,6 +4,7 @@ BasicGame.Player = function (game) {
   this.cursors = null;
   this.score = 0;
   this.damage = 10;
+  this.speed = 3;
   this.cursors = 0;
   this.countBullets = 1;
   this.nextFire = 0;
@@ -29,7 +30,7 @@ BasicGame.Player.prototype = {
     this.sprite = this.game.add.sprite(32, this.game.world.height - 130, "dude");
     this.game.physics.arcade.enable(this.sprite);
     this.sprite.body.bounce.y = 0.2;
-    this.sprite.body.gravity.y = 300;
+    //this.sprite.body.gravity.y = 300;
     this.sprite.body.collideWorldBounds = true;
     this.sprite.animations.add("left", [0, 1, 2, 3], 10, true);
     this.sprite.animations.add("right", [5, 6, 7, 8], 10, true);
@@ -40,22 +41,28 @@ BasicGame.Player.prototype = {
   },
 
   update: function () {
-    this.sprite.body.velocity.x = 0;
+    //this.sprite.body.velocity.x = 0;
 
     if (this.keys.leftKey.isDown) {
-      this.sprite.body.velocity.x = -150;
+      this.sprite.body.x -= this.speed;
       this.sprite.animations.play("left");
     } else if (this.keys.rightKey.isDown) {
-      this.sprite.body.velocity.x = 150;
+      this.sprite.body.x += this.speed;
       this.sprite.animations.play("right");
+    } else if (this.keys.upKey.isDown) {
+      this.sprite.body.y -= this.speed;
+      this.sprite.animations.stop();
+    } else if (this.keys.downKey.isDown) {
+      this.sprite.body.y += this.speed;
+      this.sprite.animations.stop();
     } else {
       this.sprite.animations.stop();
       this.sprite.frame = 4;
     }
-    if (this.keys.upKey.isDown && this.sprite.body.touching.down) {
-      console.log("up");
-      this.sprite.body.velocity.y = -350;
-    }
+    // if (this.keys.upKey.isDown && this.sprite.body.touching.down) {
+    //   console.log("up");
+    //   this.sprite.body.velocity.y = -350;
+    // }
 
     //fire
     if (this.game.input.activePointer.isDown) {
