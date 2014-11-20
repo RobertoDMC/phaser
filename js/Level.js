@@ -1,4 +1,5 @@
 BasicGame.Level = function(){
+  this.game = null;
 };
 
 BasicGame.Level.prototype = {

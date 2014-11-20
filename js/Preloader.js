@@ -15,7 +15,18 @@ BasicGame.Preloader.prototype = {
 
     this.load.setPreloadSprite(this.preloadBar);
 
+    this.load.image("sky", "images/sky.png");
+    this.load.image("ground", "images/platform.png");
+    this.load.image("star", "images/star.png");
+
     this.load.image('titlepage', 'images/title.jpg');
+    this.load.image('bullet', 'images/bullet.png');
+    this.load.image('specialBullet', 'images/specialBullet.png');
+
+    this.load.image('enemy-spider', 'images/enemies/spider.png');
+    this.load.image('enemy-skeleton', 'images/enemies/skeleton.png');
+
+
     //this.load.audio('titleMusic', ['audio/main_menu.mp3']);
 
   },
@@ -31,7 +42,7 @@ BasicGame.Preloader.prototype = {
     //if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
     //{
       this.ready = true;
-      this.state.start('MainMenu');
+      this.state.start('Game');
     //}
 
   }

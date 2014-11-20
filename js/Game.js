@@ -35,7 +35,7 @@ BasicGame.Game.prototype = {
     //this.game.player.create();
     //this.game.hud.create();
 
-    this.state.start('Level_1');
+    this.state.start('Level_2');
   },
 
   update: function () {
