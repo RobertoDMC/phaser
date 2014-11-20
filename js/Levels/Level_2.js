@@ -7,6 +7,8 @@ BasicGame.Level_2.prototype = Object.create(BasicGame.Level.prototype);
 BasicGame.Level_2.prototype.constructor = BasicGame.Level_2;
 
 BasicGame.Level_2.prototype.preload = function(){
+  this.game.showPreloadBar(this);
+  this.load.image('preloaderBackground', 'images/preloader_background.jpg');
 };
 
 BasicGame.Level_2.prototype.create = function(){

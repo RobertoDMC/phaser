@@ -8,9 +8,12 @@ BasicGame.Level.prototype = {
   enemiesGroup: null,
 
   parentPreload: function(){
+    this.game.showPreloadBar(this);
   },
 
   parentCreate: function(){
+    this.game.hidePreloadBar(this);
+
     //player
     this.game.player.create();
 
