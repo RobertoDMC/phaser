@@ -12,6 +12,7 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.moveDownNextTick = false;
   this.movementTween = null;
   this.isAggro = false; //e.g. if a player is in range
+  this.aggroRange = null;
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -33,18 +34,18 @@ BasicGame.Actor.prototype.move = function(){
   
   var distanceToPlayer = this.game.physics.arcade.distanceBetween(this, this.game.player.sprite);
   var movementSpeed = this.movementSpeed;
-  if(distanceToPlayer < 300 && !this.isAggro){
+  if(distanceToPlayer < this.aggroRange && !this.isAggro){
     this.isAggro = true;
     this.movementTween.stop();
     this.movementAnimationRunning = false;
-  }else if(distanceToPlayer > 300){
+  }else if(distanceToPlayer > this.aggroRange){
     this.isAggro = false;
   }
   if(this.isAggro) {
     movementSpeed *= 1.5;
   }
   if(!this.movementAnimationRunning){
-    var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + 100;
+    var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX;
     var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
     var moveToX = this.x;
     var moveToY = this.y;

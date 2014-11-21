@@ -3,13 +3,14 @@ BasicGame.Enemy_Spider = function (game, x, y) {
   BasicGame.Actor.call(this, this.game, x, y, 'enemy-spider');
 
   this.screenName = "Spider";
-  this.movementTpye = this.game.ACTOR_MOVEMENT_TYPE_RANDOM;
-  this.minMovementDistanceX = 100;
+  this.movementType = this.game.ACTOR_MOVEMENT_TYPE_RANDOM;
+  this.minMovementDistanceX = 200;
   this.maxMovementDistanceY = 50;
   this.movementSpeed = 0.1;
   this.health = 100; //automatic phaser health system. this.damage() for damage => kill() automatically
   this.body.width = 100;
   this.body.height = 100;
+  this.aggroRange = 300;
 
 };
 BasicGame.Enemy_Spider.prototype = Object.create(BasicGame.Actor.prototype);
