@@ -8,6 +8,8 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.minMovementDistanceX = null;
   this.maxMovementDistanceY = null;
   this.movementSpeed = null;
+  this.moveRightNextTick = false;
+  this.moveDownNextTick = false;
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -32,28 +34,41 @@ BasicGame.Actor.prototype.move = function(){
     var moveToX = this.x;
     var moveToY = this.y;
     var movementTime = randomMovementDistanceX / this.movementSpeed;
-    
-    console.log(this.width);
+    var moveLeft = false;
+    var moveUp = false;
 
     if(Math.random() < 0.5){
+      moveLeft = true;
+    }
+    if(Math.random() < 0.5){
+      moveUp = true;
+    }
+
+    if(moveLeft && !this.moveRightNextTick){
       moveToX -= randomMovementDistanceX;
-      moveToY -= randomMovementDistanceY;
       if(moveToX < 0){
-        console.log("x < 0");
-        moveToX =  this.width;
-      }
-      if(moveToY < 0){
-        console.log("y < 0");
-        moveToY =  this.height;
+        moveToX = this.body.width;
+        this.moveRightNextTick = true;
       }
     }else{
       moveToX += randomMovementDistanceX;
-      moveToY += randomMovementDistanceY;
+      this.moveRightNextTick = false;
       if(moveToX > this.game.world.width){
-        moveToX = this.game.world.width - this.width;
+        moveToX = this.game.world.width - this.body.width;
       }
+    }
+
+    if(moveUp && !this.moveDownNextTick){
+      moveToY -= randomMovementDistanceY;
+      if(moveToY < 0){
+        moveToY =  this.body.height;
+        this.moveDownNextTick = true;
+      }
+    }else{
+      moveToY += randomMovementDistanceY;
+      this.moveDownNextTick = false;
       if(moveToY > this.game.world.height){
-        moveToY = this.game.world.height - this.height;
+        moveToY = this.game.world.height - this.body.height;
       }
     }
 
