@@ -10,6 +10,8 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.movementSpeed = null;
   this.moveRightNextTick = false;
   this.moveDownNextTick = false;
+  this.movementTween = null;
+  this.isAggro = false; //e.g. if a player is in range
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -30,7 +32,15 @@ BasicGame.Actor.prototype.parentUpdate = function(){
 BasicGame.Actor.prototype.move = function(){
   
   var distanceToPlayer = this.game.physics.arcade.distanceBetween(this, this.game.player.sprite);
-
+  var movementSpeed = this.movementSpeed;
+  if(distanceToPlayer < 300 && !this.isAggro){
+    this.isAggro = true;
+    movementSpeed *= 3;
+    this.movementTween.stop();
+    this.movementAnimationRunning = false;
+  }else if(distanceToPlayer > 300){
+    this.isAggro = false;
+  }
   if(!this.movementAnimationRunning){
     var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + 100;
     var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
@@ -47,7 +57,7 @@ BasicGame.Actor.prototype.move = function(){
       moveUp = true;
     }
 
-    if(distanceToPlayer < 300){
+    if(this.isAggro){
       moveToX = this.game.player.sprite.x;
       moveToY = this.game.player.sprite.y;
     }else {
@@ -86,8 +96,8 @@ BasicGame.Actor.prototype.move = function(){
 
     this.movementAnimationRunning = true;
 
-    var movementTween = this.game.add.tween(this).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
-    movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
+    this.movementTween = this.game.add.tween(this).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
+    this.movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
   }
 };
 
