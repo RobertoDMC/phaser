@@ -49,7 +49,8 @@ BasicGame.Player.prototype = {
     } else if (this.keys.rightKey.isDown) {
       this.sprite.body.x += this.speed;
       this.sprite.animations.play("right");
-    } else if (this.keys.upKey.isDown) {
+    }
+    if (this.keys.upKey.isDown) {
       this.sprite.body.y -= this.speed;
       this.sprite.animations.stop();
     } else if (this.keys.downKey.isDown) {
