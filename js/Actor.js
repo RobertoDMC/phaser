@@ -35,18 +35,20 @@ BasicGame.Actor.prototype.move = function(){
   var movementSpeed = this.movementSpeed;
   if(distanceToPlayer < 300 && !this.isAggro){
     this.isAggro = true;
-    movementSpeed *= 3;
     this.movementTween.stop();
     this.movementAnimationRunning = false;
   }else if(distanceToPlayer > 300){
     this.isAggro = false;
+  }
+  if(this.isAggro) {
+    movementSpeed *= 1.5;
   }
   if(!this.movementAnimationRunning){
     var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + 100;
     var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
     var moveToX = this.x;
     var moveToY = this.y;
-    var movementTime = randomMovementDistanceX / this.movementSpeed;
+    var movementTime = randomMovementDistanceX / movementSpeed;
     var moveLeft = false;
     var moveUp = false;
 
