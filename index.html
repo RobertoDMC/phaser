@@ -39,12 +39,15 @@
       state.preloadBar = state.add.sprite(300, 400, 'preloaderBar');
       state.load.setPreloadSprite(state.preloadBar);
       console.log("preload");
-    }
+    };
     game.hidePreloadBar = function(state){
       state.preloaderBackground.destroy();
       state.preloadBar.destroy();
       console.log("preloadbar destroyed");
-    }
+    };
+    //define Constants
+    game.ACTOR_MOVEMENT_TYPE_RANDOM = "random";
+
 
     //  Add the States your game has.
     //  You don't have to do this in the html, it could be done in your Boot state too, but for simplicity I'll keep it here.
