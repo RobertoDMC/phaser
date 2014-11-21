@@ -5,7 +5,8 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.game.physics.arcade.enable(this);
   this.movementAnimationRunning = false;
   this.movementType = null;
-  this.maxMovementDistance = null;
+  this.minMovementDistanceX = null;
+  this.maxMovementDistanceY = null;
   this.movementSpeed = null;
 };
 
@@ -26,28 +27,39 @@ BasicGame.Actor.prototype.parentUpdate = function(){
 
 BasicGame.Actor.prototype.move = function(){
   if(!this.movementAnimationRunning){
-    var randomMovementDistance = Math.random() * this.maxMovementDistance + 100;
+    var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + 100;
+    var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
     var moveToX = this.x;
-    var movementTime = this.movementSpeed / 1000 * randomMovementDistance;
-    console.log("randomMovementDistance " + randomMovementDistance);
-    console.log("movementTime " + movementTime);
+    var moveToY = this.y;
+    var movementTime = randomMovementDistanceX / this.movementSpeed;
+    
+    console.log(this.width);
 
     if(Math.random() < 0.5){
-      moveToX -= randomMovementDistance;
+      moveToX -= randomMovementDistanceX;
+      moveToY -= randomMovementDistanceY;
       if(moveToX < 0){
-        console.log("left bound");
-        moveToX = 0;
+        console.log("x < 0");
+        moveToX =  this.width;
+      }
+      if(moveToY < 0){
+        console.log("y < 0");
+        moveToY =  this.height;
       }
     }else{
-      moveToX += randomMovementDistance;
+      moveToX += randomMovementDistanceX;
+      moveToY += randomMovementDistanceY;
       if(moveToX > this.game.world.width){
-        moveToX = this.game.world.width;
+        moveToX = this.game.world.width - this.width;
+      }
+      if(moveToY > this.game.world.height){
+        moveToY = this.game.world.height - this.height;
       }
     }
 
     this.movementAnimationRunning = true;
 
-    var movementTween = this.game.add.tween(this).to({ x: moveToX }, movementTime, Phaser.Easing.Linear.None, true);
+    var movementTween = this.game.add.tween(this).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
     movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
   }
 };
