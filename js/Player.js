@@ -12,6 +12,7 @@ BasicGame.Player = function (game) {
   this.keys = {};
   this.bulletsGroup = null;
   this.Bullets = null;
+  this.countBullets = 5;
 };
 
 BasicGame.Player.prototype = {
@@ -29,15 +30,13 @@ BasicGame.Player.prototype = {
     //sprite
     this.sprite = this.game.add.sprite(32, this.game.world.height - 130, "dude");
     this.game.physics.arcade.enable(this.sprite);
-    this.sprite.body.bounce.y = 0.2;
     this.sprite.anchor.setTo(0.5, 0.5);
-    //this.sprite.body.gravity.y = 300;
     this.sprite.body.collideWorldBounds = true;
     this.sprite.animations.add("left", [0, 1, 2, 3], 10, true);
     this.sprite.animations.add("right", [5, 6, 7, 8], 10, true);
 
     this.Bullets = new BasicGame.Bullets(this.game);
-    this.bulletsGroup = this.Bullets.getBullets();
+    this.bulletsGroup = this.Bullets.getBullets(this.countBullets);
 
   },
 
@@ -108,7 +107,7 @@ BasicGame.Player.prototype = {
 
       if (bullet) {
         //  And fire it
-        bullet.reset(this.sprite.x, this.sprite.y);
+        bullet.reset(this.sprite.x + this.sprite.width / 2, this.sprite.y);
         this.game.physics.arcade.moveToPointer(bullet, 300);
         this.nextFire = this.game.time.now + 200;
       }

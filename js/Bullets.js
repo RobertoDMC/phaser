@@ -4,10 +4,10 @@ BasicGame.Bullets = function(game){
 
 BasicGame.Bullets.prototype = {
 
-  getBullets: function(){
+  getBullets: function(count){
     var bullets = this.game.add.group();
     bullets.enableBody = true;
-    bullets.createMultiple(5, 'bullet');
+    bullets.createMultiple(count, 'bullet');
     bullets.setAll('anchor.x', 0.5);
     bullets.setAll('anchor.y', 1);
     bullets.setAll('outOfBoundsKill', true);
