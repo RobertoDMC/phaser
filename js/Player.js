@@ -30,6 +30,7 @@ BasicGame.Player.prototype = {
     this.sprite = this.game.add.sprite(32, this.game.world.height - 130, "dude");
     this.game.physics.arcade.enable(this.sprite);
     this.sprite.body.bounce.y = 0.2;
+    this.sprite.anchor.setTo(0.5, 0.5);
     //this.sprite.body.gravity.y = 300;
     this.sprite.body.collideWorldBounds = true;
     this.sprite.animations.add("left", [0, 1, 2, 3], 10, true);
@@ -107,7 +108,7 @@ BasicGame.Player.prototype = {
 
       if (bullet) {
         //  And fire it
-        bullet.reset(this.sprite.x + this.sprite.width, this.sprite.y + this.sprite.height / 2);
+        bullet.reset(this.sprite.x, this.sprite.y);
         this.game.physics.arcade.moveToPointer(bullet, 300);
         this.nextFire = this.game.time.now + 200;
       }

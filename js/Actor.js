@@ -28,6 +28,9 @@ BasicGame.Actor.prototype.parentUpdate = function(){
 };
 
 BasicGame.Actor.prototype.move = function(){
+  
+  var distanceToPlayer = this.game.physics.arcade.distanceBetween(this, this.game.player.sprite);
+
   if(!this.movementAnimationRunning){
     var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + 100;
     var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
@@ -44,31 +47,40 @@ BasicGame.Actor.prototype.move = function(){
       moveUp = true;
     }
 
-    if(moveLeft && !this.moveRightNextTick){
-      moveToX -= randomMovementDistanceX;
-      if(moveToX < 0){
-        moveToX = this.body.width;
-        this.moveRightNextTick = true;
+    if(distanceToPlayer < 300){
+      moveToX = this.game.player.sprite.x;
+      moveToY = this.game.player.sprite.y;
+    }else {
+      if (moveLeft && !this.moveRightNextTick) {
+        moveToX -= randomMovementDistanceX;
+        if (moveToX < 0) {
+          console.log("moveToX < 0");
+          moveToX = this.body.width / 2;
+          this.moveRightNextTick = true;
+        }
+      } else {
+        moveToX += randomMovementDistanceX;
+        this.moveRightNextTick = false;
+        if (moveToX > this.game.world.width) {
+          console.log("moveToX > world");
+          moveToX = this.game.world.width - this.body.width / 2;
+        }
       }
-    }else{
-      moveToX += randomMovementDistanceX;
-      this.moveRightNextTick = false;
-      if(moveToX > this.game.world.width){
-        moveToX = this.game.world.width - this.body.width;
-      }
-    }
 
-    if(moveUp && !this.moveDownNextTick){
-      moveToY -= randomMovementDistanceY;
-      if(moveToY < 0){
-        moveToY =  this.body.height;
-        this.moveDownNextTick = true;
-      }
-    }else{
-      moveToY += randomMovementDistanceY;
-      this.moveDownNextTick = false;
-      if(moveToY > this.game.world.height){
-        moveToY = this.game.world.height - this.body.height;
+      if (moveUp && !this.moveDownNextTick) {
+        moveToY -= randomMovementDistanceY;
+        if (moveToY < 0) {
+          console.log("moveToY < 0");
+          moveToY = this.body.height / 2;
+          this.moveDownNextTick = true;
+        }
+      } else {
+        moveToY += randomMovementDistanceY;
+        this.moveDownNextTick = false;
+        if (moveToY > this.game.world.height) {
+          console.log("moveToY > world");
+          moveToY = this.game.world.height - this.body.height / 2;
+        }
       }
     }
 
