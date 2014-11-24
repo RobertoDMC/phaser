@@ -59,5 +59,15 @@ BasicGame.Level.prototype = {
 
   getChosenEnemies: function(){
     return this.chosenEnemies;
+  },
+
+  playerBulletTouchingEnemy: function(bullet, enemy) {
+    enemy.health -= 50;
+    if(enemy.health <= 0){
+      enemy.isDead = true;
+    }
+    bullet.kill();
+    console.log("playerBulletTouchingEnemy!");
   }
-}
+};
+

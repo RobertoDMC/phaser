@@ -13,6 +13,7 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.movementTween = null;
   this.isAggro = false; //e.g. if a player is in range
   this.aggroRange = null;
+  this.healthBarShape = null;
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -106,8 +107,30 @@ BasicGame.Actor.prototype.move = function(){
 
 BasicGame.Actor.prototype.tweenMovementEnd = function() {
   this.movementAnimationRunning = false;
-  this.move();
+  if(this.body) {
+    this.move();
+  }
   console.log("tween end");
+};
+
+BasicGame.Actor.prototype.drawHealthBar = function () {
+  if(this.healthBarShape) {
+    this.healthBarShape.destroy();
+  }
+  if(this.health <= 0){
+    this.healthBarShape.destroy();
+  }
+  var healthBarShapeWidth = this.health/100 * this.health;
+  this.healthBarShape = this.game.add.graphics(0, 0);  //init rect
+
+  //shape.lineStyle(2, 0x0000FF, 1); // width, color (0x0000FF), alpha (0 -> 1) // required settings
+  this.healthBarShape.beginFill(0xFFFF0B, 1) // color (0xFFFF0B), alpha (0 -> 1) // required settings
+  this.healthBarShape.drawRect(this.x - healthBarShapeWidth / 2, this.y - this.height - 10, healthBarShapeWidth, 10); // (x, y, w, h)
+};
+
+BasicGame.Actor.prototype.setDead = function () {
+  this.destroy();
+  this.healthBarShape.destroy();
 };
 
 

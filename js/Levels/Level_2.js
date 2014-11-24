@@ -16,7 +16,6 @@ BasicGame.Level_2.prototype.create = function(){
 
   //enemies
   this.createEnemies();
-
 };
 
 BasicGame.Level_2.prototype.update = function(){
@@ -39,10 +38,6 @@ BasicGame.Level_2.prototype.shutdown= function() {
 
 BasicGame.Level_2.prototype.playerTouchingEnemy = function() {
   console.log("playerTouchingEnemy!");
-};
-
-BasicGame.Level_2.prototype.playerBulletTouchingEnemy = function() {
-  console.log("playerBulletTouchingEnemy!");
 };
 
 
