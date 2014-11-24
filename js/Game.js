@@ -27,7 +27,6 @@ BasicGame.Game = function (game) {
 BasicGame.Game.prototype = {
 
   preload: function(){
-    this.game.player.preload();
   },
   
   create: function () {

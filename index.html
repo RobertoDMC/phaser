@@ -10,13 +10,13 @@
   <script src="js/Preloader.js"></script>
   <script src="js/MainMenu.js"></script>
   <script src="js/Game.js"></script>
+  <script src="js/Actor.js"></script>
   <script src="js/Player.js"></script>
   <script src="js/Bullets.js"></script>
   <script src="js/Hud.js"></script>
   <script src="js/Level.js"></script>
   <script src="js/Levels/Level_1.js"></script>
   <script src="js/Levels/Level_2.js"></script>
-  <script src="js/Actor.js"></script>
   <script src="js/Enemies/Enemy_Spider.js"></script>
   <script src="js/Enemies/Enemy_Skeleton.js"></script>
 
@@ -32,7 +32,6 @@
     //  Create your Phaser game and inject it into the gameContainer div.
     //  We did it in a window.onload event, but you can do it anywhere (requireJS load, anonymous function, jQuery dom ready, - whatever floats your boat)
     var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer');
-    game.player = new BasicGame.Player(game);
     game.hud = new BasicGame.Hud(game);
     game.showPreloadBar = function(state){
       state.preloaderBackground = state.add.sprite(300, 400, 'preloaderBackground');

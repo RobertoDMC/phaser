@@ -3,6 +3,7 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.health = 0;
   Phaser.Sprite.call(this, this.game, x, y, imageRef);
   this.game.physics.arcade.enable(this);
+  this.anchor.setTo(0.5, 0.5);
   this.movementAnimationRunning = false;
   this.movementType = null;
   this.minMovementDistanceX = null;
@@ -26,18 +27,18 @@ BasicGame.Actor.prototype.parentCreate = function(){
 };
 
 BasicGame.Actor.prototype.parentUpdate = function(){
-  if(this.health <= 0){
-    this.destroy();
-  }
+  this.game.debug.body(this);
 };
 
 BasicGame.Actor.prototype.move = function(){
-  
-  var distanceToPlayer = this.game.physics.arcade.distanceBetween(this, this.game.player.sprite);
+
+  var distanceToPlayer = this.game.physics.arcade.distanceBetween(this, this.game.player);
   var movementSpeed = this.movementSpeed;
   if(distanceToPlayer < this.aggroRange && !this.isAggro){
     this.isAggro = true;
-    this.movementTween.stop();
+    if(this.movementTween) {
+      this.movementTween.stop();
+    }
     this.movementAnimationRunning = false;
   }else if(distanceToPlayer > this.aggroRange){
     this.isAggro = false;
@@ -62,14 +63,15 @@ BasicGame.Actor.prototype.move = function(){
     }
 
     if(this.isAggro){
-      moveToX = this.game.player.sprite.x;
-      moveToY = this.game.player.sprite.y;
+      moveToX = this.game.player.x;
+      moveToY = this.game.player.y;
     }else {
       if (moveLeft && !this.moveRightNextTick) {
         moveToX -= randomMovementDistanceX;
         if (moveToX < 0) {
           console.log("moveToX < 0");
           moveToX = this.body.width / 2;
+          console.log("moving to " + moveToX);
           this.moveRightNextTick = true;
         }
       } else {
@@ -113,24 +115,29 @@ BasicGame.Actor.prototype.tweenMovementEnd = function() {
   console.log("tween end");
 };
 
-BasicGame.Actor.prototype.drawHealthBar = function () {
-  if(this.healthBarShape) {
+BasicGame.Actor.prototype.drawHealthBar = function (color) {
+  if(!color){
+    color = 0xFFFF0B;
+  }
+  if(this.healthBarShape || this.health <= 0) {
     this.healthBarShape.destroy();
   }
-  if(this.health <= 0){
-    this.healthBarShape.destroy();
-  }
-  var healthBarShapeWidth = this.health/100 * this.health;
+  var healthBarShapeWidth = this.width/100 * this.health;
   this.healthBarShape = this.game.add.graphics(0, 0);  //init rect
 
-  //shape.lineStyle(2, 0x0000FF, 1); // width, color (0x0000FF), alpha (0 -> 1) // required settings
-  this.healthBarShape.beginFill(0xFFFF0B, 1) // color (0xFFFF0B), alpha (0 -> 1) // required settings
-  this.healthBarShape.drawRect(this.x - healthBarShapeWidth / 2, this.y - this.height - 10, healthBarShapeWidth, 10); // (x, y, w, h)
+  //shape.lineStyle(2, 0x0000FF, 1);
+  this.healthBarShape.beginFill(color, 1);
+  this.healthBarShape.drawRect(this.x - healthBarShapeWidth / 2, this.y - this.height - 10, healthBarShapeWidth, 6); // (x, y, w, h)
 };
 
-BasicGame.Actor.prototype.setDead = function () {
-  this.destroy();
-  this.healthBarShape.destroy();
+BasicGame.Actor.prototype.receiveDamage = function(damage) {
+  this.health -= damage;
+
+  if(this.health <= 0){
+    console.log("dead!");
+    this.destroy();
+    this.healthBarShape.destroy();
+  }
 };
 
 

@@ -15,7 +15,11 @@ BasicGame.Level.prototype = {
     this.game.hidePreloadBar(this);
 
     //player
+    this.game.player = new BasicGame.Player(this.game, 100, 400);
     this.game.player.create();
+
+    //enemies
+    this.createEnemies();
 
     //hud
     this.game.hud.setLevelName(this.levelName);
@@ -46,7 +50,7 @@ BasicGame.Level.prototype = {
       enemy.y = j;
       enemy.body.collideWorldBounds = true;
       this.enemiesGroup.add(enemy);
-      //this.game.add.existing(enemy);
+      this.game.add.existing(enemy);
     }
 
   },
@@ -62,12 +66,14 @@ BasicGame.Level.prototype = {
   },
 
   playerBulletTouchingEnemy: function(bullet, enemy) {
-    enemy.health -= 50;
-    if(enemy.health <= 0){
-      enemy.isDead = true;
-    }
+    enemy.receiveDamage(50);
     bullet.kill();
     console.log("playerBulletTouchingEnemy!");
+  },
+
+  playerTouchingEnemy: function(player, enemy) {
+    player.receiveDamage(5);
+    console.log("playerTouchingEnemy!");
   }
 };
 

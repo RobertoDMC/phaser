@@ -18,8 +18,7 @@ BasicGame.Enemy_Spider.prototype.constructor = BasicGame.Enemy_Spider;
 
 BasicGame.Enemy_Spider.prototype.update = function () {
   //this.damage(1);
-  this.game.debug.body(this);
-  this.drawHealthBar();
+  this.drawHealthBar(0xFF0000);
   this.move();
 
   //console.log(this.screenName + " health: " + this.health);

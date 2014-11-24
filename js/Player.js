@@ -1,6 +1,8 @@
-BasicGame.Player = function (game) {
+BasicGame.Player = function (game, x, y) {
   this.game = game;
-  this.sprite = null;
+  BasicGame.Actor.call(this, this.game, x, y, 'enemy-skeleton');
+
+  this.screenName = "Player";
   this.cursors = null;
   this.score = 0;
   this.damage = 10;
@@ -13,118 +15,96 @@ BasicGame.Player = function (game) {
   this.bulletsGroup = null;
   this.Bullets = null;
   this.countBullets = 5;
+  this.health = 100;
+};
+BasicGame.Player.prototype = Object.create(BasicGame.Actor.prototype);
+BasicGame.Player.prototype.constructor = BasicGame.Player;
+
+BasicGame.Player.prototype.preload = function () {
 };
 
-BasicGame.Player.prototype = {
+BasicGame.Player.prototype.create = function () {
 
-  preload: function () {
-    this.game.load.spritesheet("dude", "images/dude.png", 32, 48);
-  },
+  this.body.collideWorldBounds = true;
+  this.game.add.existing(this);
 
-  create: function () {
+  //keyboard input
+  this.createKeys();
 
-    //keyboard input
-    //this.cursors = this.game.input.keyboard.createCursorKeys();
-    this.createKeys();
+  //sprite
+  //this.animations.add("left", [0, 1, 2, 3], 10, true);
+  //this.animations.add("right", [5, 6, 7, 8], 10, true);
 
-    //sprite
-    this.sprite = this.game.add.sprite(32, this.game.world.height - 130, "dude");
-    this.game.physics.arcade.enable(this.sprite);
-    this.sprite.anchor.setTo(0.5, 0.5);
-    this.sprite.body.collideWorldBounds = true;
-    this.sprite.animations.add("left", [0, 1, 2, 3], 10, true);
-    this.sprite.animations.add("right", [5, 6, 7, 8], 10, true);
+  this.Bullets = new BasicGame.Bullets(this.game);
+  this.bulletsGroup = this.Bullets.getBullets(this.countBullets);
 
-    this.Bullets = new BasicGame.Bullets(this.game);
-    this.bulletsGroup = this.Bullets.getBullets(this.countBullets);
+};
 
-  },
+BasicGame.Player.prototype.update = function () {
 
-  update: function () {
-    //this.sprite.body.velocity.x = 0;
+  this.parentUpdate();
+  this.drawHealthBar();
 
-    if (this.keys.leftKey.isDown) {
-      this.sprite.body.x -= this.speed;
-      this.sprite.animations.play("left");
-    } else if (this.keys.rightKey.isDown) {
-      this.sprite.body.x += this.speed;
-      this.sprite.animations.play("right");
-    }
-    if (this.keys.upKey.isDown) {
-      this.sprite.body.y -= this.speed;
-      this.sprite.animations.stop();
-    } else if (this.keys.downKey.isDown) {
-      this.sprite.body.y += this.speed;
-      this.sprite.animations.stop();
-    } else {
-      this.sprite.animations.stop();
-      this.sprite.frame = 4;
-    }
-    // if (this.keys.upKey.isDown && this.sprite.body.touching.down) {
-    //   console.log("up");
-    //   this.sprite.body.velocity.y = -350;
-    // }
-
-    //fire
-    if (this.game.input.activePointer.isDown) {
-      this.fire();
-    }
-
-    //collision of bulletsGroup
-    //this.Bullets.checkCollision(this.bulletsGroup);
-  },
-
-  createKeys: function () {
-    this.keys.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-    this.keys.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-    this.keys.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
-    this.keys.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-  },
-
-  incrementScore: function (incScore) {
-    this.score += incScore;
-  },
-
-  getScore: function () {
-    return this.score;
-  },
-
-  incrementDamage: function (incDamage) {
-    this.damage += incDamage;
-  },
-
-  collectStar: function (playerSprite, star) {
-    star.kill();
-    this.incrementScore(10);
-    console.log("star ep:" + star.ep);
-  },
-
-  fire: function () {
-
-    if (this.game.time.now > this.nextFire) {
-      //  Grab the first bullet we can from the pool
-      bullet = this.bulletsGroup.getFirstExists(false);
-
-      if (bullet) {
-        //  And fire it
-        bullet.reset(this.sprite.x + this.sprite.width / 2, this.sprite.y);
-        this.game.physics.arcade.moveToPointer(bullet, 300);
-        this.nextFire = this.game.time.now + 200;
-      }
-    }
-
-    /*
-    if (this.game.time.now > this.nextFire) {
-      var bullet = new BasicGame.Bullet(this.game);
-      bullet.create();
-      this.nextFire = this.game.time.now + this.fireRate;
-      this.bulletsGroup.push(bullet);
-      this.game.physics.arcade.collide(bullet.sprite, this.game.platforms);
-      this.game.physics.arcade.moveToPointer(bullet.sprite, 300);
-
-      bullet.update();
-    }
-    */
-
+  if (this.keys.leftKey.isDown) {
+    this.x -= this.speed;
+    //this.animations.play("left");
+  } else if (this.keys.rightKey.isDown) {
+    this.x += this.speed;
+    //this.animations.play("right");
   }
-}
+  if (this.keys.upKey.isDown) {
+    this.y -= this.speed;
+    this.animations.stop();
+  } else if (this.keys.downKey.isDown) {
+    this.y += this.speed;
+    this.animations.stop();
+  } else {
+    this.animations.stop();
+    //this.frame = 4;
+  }
+
+  //fire
+  if (this.game.input.activePointer.isDown) {
+    this.fire();
+  }
+
+};
+
+BasicGame.Player.prototype.createKeys = function () {
+  this.keys.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+  this.keys.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+  this.keys.upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+  this.keys.downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+};
+
+BasicGame.Player.prototype.incrementScore = function (incScore) {
+  this.score += incScore;
+};
+
+BasicGame.Player.prototype.getScore = function () {
+  return this.score;
+};
+
+BasicGame.Player.prototype.incrementDamage = function (incDamage) {
+  this.damage += incDamage;
+};
+
+BasicGame.Player.prototype.getDamage = function () {
+  return this.damage;
+};
+
+BasicGame.Player.prototype.fire = function () {
+
+  if (this.game.time.now > this.nextFire) {
+    //  Grab the first bullet we can from the pool
+    var bullet = this.bulletsGroup.getFirstExists(false);
+
+    if (bullet) {
+      //  And fire it
+      bullet.reset(this.x + this.width / 2, this.y);
+      this.game.physics.arcade.moveToPointer(bullet, 300);
+      this.nextFire = this.game.time.now + 200;
+    }
+  }
+
+};
