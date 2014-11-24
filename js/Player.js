@@ -1,6 +1,6 @@
 BasicGame.Player = function (game, x, y) {
   this.game = game;
-  BasicGame.Actor.call(this, this.game, x, y, 'enemy-skeleton');
+  BasicGame.Actor.call(this, this.game, x, y, 'dude');
 
   this.screenName = "Player";
   this.cursors = null;
@@ -26,14 +26,15 @@ BasicGame.Player.prototype.preload = function () {
 BasicGame.Player.prototype.create = function () {
 
   this.body.collideWorldBounds = true;
-  this.game.add.existing(this);
 
   //keyboard input
   this.createKeys();
 
   //sprite
-  //this.animations.add("left", [0, 1, 2, 3], 10, true);
-  //this.animations.add("right", [5, 6, 7, 8], 10, true);
+  this.animations.add("left", [0, 1, 2, 3], 10, true);
+  this.animations.add("right", [5, 6, 7, 8], 10, true);
+
+  this.game.add.existing(this);
 
   this.Bullets = new BasicGame.Bullets(this.game);
   this.bulletsGroup = this.Bullets.getBullets(this.countBullets);
@@ -47,10 +48,10 @@ BasicGame.Player.prototype.update = function () {
 
   if (this.keys.leftKey.isDown) {
     this.x -= this.speed;
-    //this.animations.play("left");
+    this.animations.play("left");
   } else if (this.keys.rightKey.isDown) {
     this.x += this.speed;
-    //this.animations.play("right");
+    this.animations.play("right");
   }
   if (this.keys.upKey.isDown) {
     this.y -= this.speed;
@@ -60,7 +61,7 @@ BasicGame.Player.prototype.update = function () {
     this.animations.stop();
   } else {
     this.animations.stop();
-    //this.frame = 4;
+    this.frame = 4;
   }
 
   //fire
