@@ -101,7 +101,7 @@ BasicGame.Player.prototype.fire = function () {
 
     if (bullet) {
       //  And fire it
-      bullet.reset(this.x + this.width / 2, this.y);
+      bullet.reset(this.x, this.y - bullet.height);
       this.game.physics.arcade.moveToPointer(bullet, 300);
       this.nextFire = this.game.time.now + 200;
     }
