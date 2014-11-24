@@ -47,21 +47,26 @@ BasicGame.Player.prototype.update = function () {
   this.drawHealthBar();
 
   if (this.keys.leftKey.isDown) {
+    // moving left
     this.x -= this.speed;
     this.animations.play("left");
   } else if (this.keys.rightKey.isDown) {
+    // moving right
     this.x += this.speed;
     this.animations.play("right");
   }
-  if (this.keys.upKey.isDown) {
-    this.y -= this.speed;
-    this.animations.stop();
-  } else if (this.keys.downKey.isDown) {
-    this.y += this.speed;
-    this.animations.stop();
-  } else {
+  else {
+    // not moving left or right, so stop the walking animation
     this.animations.stop();
     this.frame = 4;
+  }
+  
+  if (this.keys.upKey.isDown) {
+    // moving up
+    this.y -= this.speed;
+  } else if (this.keys.downKey.isDown) {
+    // moving down
+    this.y += this.speed;
   }
 
   //fire

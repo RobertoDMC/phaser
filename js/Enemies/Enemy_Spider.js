@@ -11,6 +11,7 @@ BasicGame.Enemy_Spider = function (game, x, y) {
   this.body.width = 100;
   this.body.height = 100;
   this.aggroRange = 300;
+  this.hitPoints = 30;
 
 };
 BasicGame.Enemy_Spider.prototype = Object.create(BasicGame.Actor.prototype);
