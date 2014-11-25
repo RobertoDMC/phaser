@@ -12,25 +12,33 @@ BasicGame.Level.prototype.parentCreate = function () {
   //init
   this.chosenEnemies = Array();
   this.enemiesGroup = Array();
-  //this.map = null;
-  //this.mapLayer = null;
+  this.mapLayerFloorAndWalls = null;
 
   //hide preloader
   this.game.hidePreloadBar(this);
 
   //create map
   //all these properties must be set by the .json files properties
-  this.map = this.game.add.tilemap("map"); // Preloaded tilemap
-  this.map.addTilesetImage("map_tileset"); // Preloaded tileset
-  this.mapLayer = this.map.createLayer("Tile Layer 1"); // This is the default name of the first layer in Tiled
-  //this.mapLayer.debug = true;
-  this.map.setCollisionBetween(1, 4, true, this.mapLayer); // If you use 'collide' function with the layer, then the tiles from the first (ID 0) tile till the 100th element will collide with the other sprite
-  this.mapLayer.resizeWorld(); // Sets the world size to match the size of this layer.
+  this.map = this.game.add.tilemap("map");
+  //tilesets
+  this.map.addTilesetImage("dungeon_tileset");
+  this.map.addTilesetImage("objects_tilset");
+  // this.map.addTilesetImage("floor_shadow_tileset");
+  //layers
+  this.mapLayerFloorAndWalls = this.map.createLayer("floor_and_walls");
+  this.mapLayerDoors = this.map.createLayer("doors");
+  this.mapLayerWallInventory = this.map.createLayer("wallinventory");
+  this.mapLayerObstaclesShadows = this.map.createLayer("obstacles_shadows");
+  this.mapLayerObstacles = this.map.createLayer("obstacles");
+  this.map.setCollisionBetween(9, 88, true, this.mapLayerFloorAndWalls);
+  this.map.setCollision(Array(91, 198), true, this.mapLayerObstacles); //TODO: look at level2.json and Tiler => where do those ids come from?
+
+  //this.mapLayerObstacles.debug = true;
   //map.setTileIndexCallback(255, this.awesomeEvent, this); // event if touching tile id 255
 
 
   //create player
-  this.game.player = new BasicGame.Player(this.game, 150, 150);
+  this.game.player = new BasicGame.Player(this.game, 90, 160);
   this.game.player.create();
 
   //create enemies
@@ -60,11 +68,11 @@ BasicGame.Level.prototype.createEnemies = function () {
   for (var i = 0; i < arEnemiesClassNames.length; i++) {
     var enemyClassName = arEnemiesClassNames[i];
     console.log(enemyClassName);
-    coordinateVal += 300;
+    coordinateVal += 350;
     var enemy = new BasicGame[enemyClassName](this.game, -120, -120);
     enemy.anchor.setTo(0.5, 0.5);
     enemy.x = coordinateVal;
-    enemy.y = coordinateVal;
+    enemy.y = coordinateVal / 2;
     enemy.body.collideWorldBounds = true;
     this.enemiesGroup.add(enemy);
   }

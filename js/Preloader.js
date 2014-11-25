@@ -25,8 +25,10 @@ BasicGame.Preloader.prototype = {
 
     this.load.spritesheet("dude", "images/dude.png", 32, 48);
 
-    this.load.image('map_tileset', 'images/map/map_tileset.png'); // loading the tileset image
-    this.load.tilemap('map', 'images/map/map.json', null, Phaser.Tilemap.TILED_JSON); // loading the tilemap
+    this.load.image('dungeon_tileset', 'images/map/dungeon_tileset_64.png'); // loading the tileset image
+    this.load.image('objects_tilset', 'images/map/objects_tilset_64.png'); // loading the tileset image
+    // this.load.image('floor_shadow_tileset', 'images/map/floor_shadow_tileset_64.png'); // loading the tileset image
+    this.load.tilemap('map', 'images/map/level2.json', null, Phaser.Tilemap.TILED_JSON); // loading the tilemap
 
 
     //this.load.audio('titleMusic', ['audio/main_menu.mp3']);

@@ -11,8 +11,8 @@ BasicGame.Enemy_Spider = function (game, x, y) {
   this.minMovementDistanceX = 200;
   this.maxMovementDistanceY = 50;
   this.movementSpeed = 0.1;
-  this.body.width = 100;
-  this.body.height = 100;
+  this.body.width = 50;
+  this.body.height = 50;
   this.aggroRange = 300;
   this.damage = 10;
 };

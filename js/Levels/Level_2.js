@@ -33,7 +33,8 @@ BasicGame.Level_2.prototype.update = function () {
   //collision events
   this.game.physics.arcade.overlap(this.game.player, this.enemiesGroup, this.playerTouchingEnemy, null, this);
   this.game.physics.arcade.overlap(this.game.player.bulletsGroup, this.enemiesGroup, this.playerBulletTouchingEnemy, null, this);
-  this.game.physics.arcade.collide(this.game.player, this.mapLayer);
+  this.game.physics.arcade.collide(this.game.player, this.mapLayerFloorAndWalls);
+  this.game.physics.arcade.collide(this.game.player, this.mapLayerObstacles);
 
   //TODO: camera how to exactly?
   //this.game.camera.follow(this.game.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
