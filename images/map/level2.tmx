@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="dungeon_tileset_64" tilewidth="64" tileheight="64">
+  <image source="../../_projectFiles/graphicriver-8754069-topdown-roguelike-dungeon-crawl-rpg-tileset/dungeon_tileset_64.png" width="512" height="704"/>
+ </tileset>
+ <tileset firstgid="89" name="objects_tilset_64" tilewidth="64" tileheight="64">
+  <image source="../../_projectFiles/graphicriver-8754069-topdown-roguelike-dungeon-crawl-rpg-tileset/objects_tilset_64.png" trans="ffffff" width="640" height="832"/>
+ </tileset>
+ <layer name="Floor" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJyVzlkKwCAMBFCVWM/U5Q5dsMv9T9IpJCCSUP14EEzGZHXOzYoTiF3GzAYTPAbPrP7Ced8hFXWZp4ZshGDkpd96B/3cT1UdlBnJp469scofMEKGQdlfzqfq7cvfTP7pscMLjgwQLQ==
+  </data>
+ </layer>
+ <layer name="Doors" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANqoG4Bo88IdAKxG0U6B8Fgx8AAAf8AgM=
+  </data>
+ </layer>
+ <layer name="Wallinventory" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYICAPgbiQBUUo4MZROpvgeJRMDwAADqyAyM=
+  </data>
+ </layer>
+ <layer name="Kachelebene 3" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4B8AAACQAAB
+  </data>
+ </layer>
+ <layer name="Treasures Shadows" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAJbgXj/QDuCxgAASqMBdQ==
+  </data>
+ </layer>
+ <layer name="Treasures" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF+MAyCvSeAeIN1HLIIAUADM4CIw==
+  </data>
+ </layer>
+ <layer name="Keys Shadows" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIxFcoJI5ADzAANE=
+  </data>
+ </layer>
+ <layer name="Keys" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIxGcp5I5ADx4ANA=
+  </data>
+ </layer>
+ <layer name="Lights" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYKANuIyDPQqGFwAAHPkBpw==
+  </data>
+ </layer>
+</map>
