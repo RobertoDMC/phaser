@@ -1,7 +1,9 @@
 BasicGame.Actor = function(game, x, y, imageRef){
   this.game = game;
   this.health = 0;
+
   Phaser.Sprite.call(this, this.game, x, y, imageRef);
+
   this.game.physics.arcade.enable(this);
   this.anchor.setTo(0.5, 0.5);
   this.movementAnimationRunning = false;
@@ -24,6 +26,8 @@ BasicGame.Actor.prototype.parentPreload = function(){
 };
 
 BasicGame.Actor.prototype.parentCreate = function(){
+  this.health = this.maxHealth;
+  console.log(this.screenName + " created");
 };
 
 BasicGame.Actor.prototype.parentUpdate = function(){
@@ -102,7 +106,7 @@ BasicGame.Actor.prototype.move = function(){
 
     this.movementAnimationRunning = true;
 
-    this.movementTween = this.game.add.tween(this).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
+    this.movementTween = this.game.add.tween(this.body).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
     this.movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
   }
 };
@@ -122,7 +126,7 @@ BasicGame.Actor.prototype.drawHealthBar = function (color) {
   if(this.healthBarShape || this.health <= 0) {
     this.healthBarShape.destroy();
   }
-  var healthBarShapeWidth = this.width/100 * this.health;
+  var healthBarShapeWidth = this.health * this.width / this.maxHealth;
   this.healthBarShape = this.game.add.graphics(0, 0);  //init rect
 
   //shape.lineStyle(2, 0x0000FF, 1);

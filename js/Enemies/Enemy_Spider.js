@@ -1,27 +1,26 @@
 BasicGame.Enemy_Spider = function (game, x, y) {
   this.game = game;
+  this.screenName = "Spider";
+  this.maxHealth = 1000;
+
   BasicGame.Actor.call(this, this.game, x, y, 'enemy-spider');
 
-  this.screenName = "Spider";
+  this.parentCreate();
+
   this.movementType = this.game.ACTOR_MOVEMENT_TYPE_RANDOM;
   this.minMovementDistanceX = 200;
   this.maxMovementDistanceY = 50;
   this.movementSpeed = 0.1;
-  this.health = 100; //automatic phaser health system. this.damage() for damage => kill() automatically
   this.body.width = 100;
   this.body.height = 100;
   this.aggroRange = 300;
-  this.hitPoints = 30;
-
+  this.damage = 10;
 };
 BasicGame.Enemy_Spider.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Enemy_Spider.prototype.constructor = BasicGame.Enemy_Spider;
 
 BasicGame.Enemy_Spider.prototype.update = function () {
-  //this.damage(1);
   this.drawHealthBar(0xFF0000);
-  this.move();
-
-  //console.log(this.screenName + " health: " + this.health);
+  //this.move();
   this.parentUpdate();
 };

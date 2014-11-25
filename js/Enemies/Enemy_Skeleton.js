@@ -1,23 +1,25 @@
 BasicGame.Enemy_Skeleton = function (game, x, y) {
   this.game = game;
   this.screenName = "Skeleton";
+  this.maxHealth = 1000;
 
   BasicGame.Actor.call(this, this.game, x, y, 'enemy-skeleton');
-  this.health = 100; //automatic phaser healt system. this.damage() for damage => kill() automatically
+
+  this.parentCreate();
+
+  this.movementType = this.game.ACTOR_MOVEMENT_TYPE_RANDOM;
+  this.minMovementDistanceX = 200;
+  this.maxMovementDistanceY = 50;
+  this.movementSpeed = 0.1;
+  this.aggroRange = 300;
+  this.damage = 1;
 
 };
 BasicGame.Enemy_Skeleton.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Enemy_Skeleton.prototype.constructor = BasicGame.Enemy_Skeleton;
 
-BasicGame.Enemy_Skeleton.prototype.preload = function () {
-};
-
-BasicGame.Enemy_Skeleton.prototype.create = function (x, y) {
-};
-
 BasicGame.Enemy_Skeleton.prototype.update = function () {
-  //this.damage(1);
-  this.x += 5;
-  //console.log(this.screenName + " health: " + this.health);
+  this.drawHealthBar(0xFF0000);
+  //this.move();
   this.parentUpdate();
 };

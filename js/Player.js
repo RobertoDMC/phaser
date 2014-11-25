@@ -1,8 +1,10 @@
 BasicGame.Player = function (game, x, y) {
   this.game = game;
+  this.screenName = "Player";
+  this.maxHealth = 1000;
+
   BasicGame.Actor.call(this, this.game, x, y, 'dude');
 
-  this.screenName = "Player";
   this.cursors = null;
   this.score = 0;
   this.damage = 10;
@@ -15,7 +17,6 @@ BasicGame.Player = function (game, x, y) {
   this.bulletsGroup = null;
   this.Bullets = null;
   this.countBullets = 5;
-  this.health = 100;
 };
 BasicGame.Player.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Player.prototype.constructor = BasicGame.Player;
@@ -24,6 +25,8 @@ BasicGame.Player.prototype.preload = function () {
 };
 
 BasicGame.Player.prototype.create = function () {
+
+  this.parentCreate();
 
   this.body.collideWorldBounds = true;
 
