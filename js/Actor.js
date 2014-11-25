@@ -144,6 +144,22 @@ BasicGame.Actor.prototype.receiveDamage = function(damage) {
   }
 };
 
+BasicGame.Actor.prototype.fire = function () {
+
+  if (this.game.time.now > this.nextFire) {
+    //  Grab the first bullet we can from the pool
+    var bullet = this.bulletsGroup.getFirstExists(false);
+
+    if (bullet) {
+      //  And fire it
+      bullet.reset(this.x, this.y - bullet.height);
+      this.game.physics.arcade.moveToPointer(bullet, 300);
+      this.nextFire = this.game.time.now + 200;
+    }
+  }
+
+};
+
 
 
 

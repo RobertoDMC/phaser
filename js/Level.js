@@ -9,16 +9,31 @@ BasicGame.Level.prototype.parentPreload = function () {
 
 BasicGame.Level.prototype.parentCreate = function () {
 
+  //init
   this.chosenEnemies = Array();
   this.enemiesGroup = Array();
+  //this.map = null;
+  //this.mapLayer = null;
 
+  //hide preloader
   this.game.hidePreloadBar(this);
 
-  //player
-  this.game.player = new BasicGame.Player(this.game, 100, 400);
+  //create map
+  //all these properties must be set by the .json files properties
+  this.map = this.game.add.tilemap("map"); // Preloaded tilemap
+  this.map.addTilesetImage("map_tileset"); // Preloaded tileset
+  this.mapLayer = this.map.createLayer("Tile Layer 1"); // This is the default name of the first layer in Tiled
+  //this.mapLayer.debug = true;
+  this.map.setCollisionBetween(1, 4, true, this.mapLayer); // If you use 'collide' function with the layer, then the tiles from the first (ID 0) tile till the 100th element will collide with the other sprite
+  this.mapLayer.resizeWorld(); // Sets the world size to match the size of this layer.
+  //map.setTileIndexCallback(255, this.awesomeEvent, this); // event if touching tile id 255
+
+
+  //create player
+  this.game.player = new BasicGame.Player(this.game, 150, 150);
   this.game.player.create();
 
-  //enemies
+  //create enemies
   this.createEnemies();
 
   //hud
@@ -29,6 +44,8 @@ BasicGame.Level.prototype.parentCreate = function () {
 BasicGame.Level.prototype.parentUpdate = function () {
   this.game.player.update();
   this.game.hud.update();
+
+
 };
 
 BasicGame.Level.prototype.createEnemies = function () {
@@ -43,7 +60,7 @@ BasicGame.Level.prototype.createEnemies = function () {
   for (var i = 0; i < arEnemiesClassNames.length; i++) {
     var enemyClassName = arEnemiesClassNames[i];
     console.log(enemyClassName);
-    coordinateVal += 200;
+    coordinateVal += 300;
     var enemy = new BasicGame[enemyClassName](this.game, -120, -120);
     enemy.anchor.setTo(0.5, 0.5);
     enemy.x = coordinateVal;
@@ -52,7 +69,6 @@ BasicGame.Level.prototype.createEnemies = function () {
     this.enemiesGroup.add(enemy);
   }
   this.game.add.enemiesGroup;
-
 
 };
 

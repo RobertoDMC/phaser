@@ -23,7 +23,10 @@ BasicGame.Preloader.prototype = {
     this.load.image('enemy-spider', 'images/enemies/spider.png');
     this.load.image('enemy-skeleton', 'images/enemies/skeleton.png');
 
-    this.game.load.spritesheet("dude", "images/dude.png", 32, 48);
+    this.load.spritesheet("dude", "images/dude.png", 32, 48);
+
+    this.load.image('map_tileset', 'images/map/map_tileset.png'); // loading the tileset image
+    this.load.tilemap('map', 'images/map/map.json', null, Phaser.Tilemap.TILED_JSON); // loading the tilemap
 
 
     //this.load.audio('titleMusic', ['audio/main_menu.mp3']);

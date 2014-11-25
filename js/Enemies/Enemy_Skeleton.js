@@ -20,6 +20,6 @@ BasicGame.Enemy_Skeleton.prototype.constructor = BasicGame.Enemy_Skeleton;
 
 BasicGame.Enemy_Skeleton.prototype.update = function () {
   this.drawHealthBar(0xFF0000);
-  //this.move();
+  this.move();
   this.parentUpdate();
 };

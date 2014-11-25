@@ -51,11 +51,11 @@ BasicGame.Player.prototype.update = function () {
 
   if (this.keys.leftKey.isDown) {
     // moving left
-    this.x -= this.speed;
+    this.body.velocity.x -= this.speed;
     this.animations.play("left");
   } else if (this.keys.rightKey.isDown) {
     // moving right
-    this.x += this.speed;
+    this.body.velocity.x += this.speed;
     this.animations.play("right");
   }
   else {
@@ -66,10 +66,10 @@ BasicGame.Player.prototype.update = function () {
   
   if (this.keys.upKey.isDown) {
     // moving up
-    this.y -= this.speed;
+    this.body.velocity.y -= this.speed;
   } else if (this.keys.downKey.isDown) {
     // moving down
-    this.y += this.speed;
+    this.body.velocity.y += this.speed;
   }
 
   //fire
@@ -100,20 +100,4 @@ BasicGame.Player.prototype.incrementDamage = function (incDamage) {
 
 BasicGame.Player.prototype.getDamage = function () {
   return this.damage;
-};
-
-BasicGame.Player.prototype.fire = function () {
-
-  if (this.game.time.now > this.nextFire) {
-    //  Grab the first bullet we can from the pool
-    var bullet = this.bulletsGroup.getFirstExists(false);
-
-    if (bullet) {
-      //  And fire it
-      bullet.reset(this.x, this.y - bullet.height);
-      this.game.physics.arcade.moveToPointer(bullet, 300);
-      this.nextFire = this.game.time.now + 200;
-    }
-  }
-
 };
