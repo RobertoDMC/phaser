@@ -7,17 +7,22 @@ BasicGame.Player = function (game, x, y) {
 
   this.cursors = null;
   this.score = 0;
-  this.damage = 30;
-  this.speed = 3;
   this.cursors = 0;
-  this.countBullets = 1;
   this.nextFire = 0;
-  this.fireRate = 300;
   this.keys = {};
   this.bulletsGroup = null;
   this.Bullets = null;
   this.countBullets = 5;
   this.xpSystem = new BasicGame.Experience(this);
+
+  //tweak these /level up these
+  this.damage = 30;
+  this.speed = 8;
+  this.countBullets = 1;
+  this.fireRate = 300;
+  this.bodyDragX = 600; //more realistic movement / friction
+  this.bodyDragY = 600; //more realistic movement / friction
+  this.maximumVelocity = new Phaser.Point(300, 300);
 };
 BasicGame.Player.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Player.prototype.constructor = BasicGame.Player;
@@ -26,10 +31,12 @@ BasicGame.Player.prototype.preload = function () {
 };
 
 BasicGame.Player.prototype.create = function () {
-
   this.parentCreate();
 
   this.body.collideWorldBounds = true;
+  this.body.drag.x = this.bodyDragX;
+  this.body.drag.y = this.bodyDragY;
+  this.body.maxVelocity = this.maximumVelocity;
 
   //keyboard input
   this.createKeys();

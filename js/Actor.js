@@ -32,7 +32,7 @@ BasicGame.Actor.prototype.parentCreate = function(){
 };
 
 BasicGame.Actor.prototype.parentUpdate = function(){
-  //this.game.debug.body(this);
+  this.game.debug.body(this);
 };
 
 BasicGame.Actor.prototype.move = function(){
