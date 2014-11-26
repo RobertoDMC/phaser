@@ -17,11 +17,11 @@ BasicGame.Player = function (game, x, y) {
 
   //tweak these /level up these
   this.damage = 30;
-  this.speed = 8;
+  this.speed = 15;
   this.countBullets = 1;
   this.fireRate = 300;
-  this.bodyDragX = 600; //more realistic movement / friction
-  this.bodyDragY = 600; //more realistic movement / friction
+  this.bodyDragX = 900; //more realistic movement / friction
+  this.bodyDragY = 900; //more realistic movement / friction
   this.maximumVelocity = new Phaser.Point(300, 300);
 };
 BasicGame.Player.prototype = Object.create(BasicGame.Actor.prototype);
