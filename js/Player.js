@@ -7,7 +7,7 @@ BasicGame.Player = function (game, x, y) {
 
   this.cursors = null;
   this.score = 0;
-  this.damage = 10;
+  this.damage = 30;
   this.speed = 3;
   this.cursors = 0;
   this.countBullets = 1;
@@ -17,6 +17,7 @@ BasicGame.Player = function (game, x, y) {
   this.bulletsGroup = null;
   this.Bullets = null;
   this.countBullets = 5;
+  this.xpSystem = new BasicGame.Experience(this);
 };
 BasicGame.Player.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Player.prototype.constructor = BasicGame.Player;
@@ -48,6 +49,9 @@ BasicGame.Player.prototype.update = function () {
 
   this.parentUpdate();
   this.drawHealthBar();
+
+  this.xpSystem.update();
+  //this.xpSystem.addXp(1);
 
   if (this.keys.leftKey.isDown) {
     // moving left

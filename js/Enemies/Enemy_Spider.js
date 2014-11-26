@@ -1,7 +1,7 @@
 BasicGame.Enemy_Spider = function (game, x, y) {
   this.game = game;
   this.screenName = "Spider";
-  this.maxHealth = 1000;
+  this.maxHealth = 100;
 
   BasicGame.Actor.call(this, this.game, x, y, 'enemy-spider');
 
@@ -15,6 +15,8 @@ BasicGame.Enemy_Spider = function (game, x, y) {
   this.body.height = 50;
   this.aggroRange = 300;
   this.damage = 10;
+  this.isEnemy = true;
+  this.givesXP = 55;
 };
 BasicGame.Enemy_Spider.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Enemy_Spider.prototype.constructor = BasicGame.Enemy_Spider;

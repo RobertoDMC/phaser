@@ -17,6 +17,8 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.isAggro = false; //e.g. if a player is in range
   this.aggroRange = null;
   this.healthBarShape = null;
+  this.isEnemy = null;
+  this.givesXP = null;
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -138,6 +140,9 @@ BasicGame.Actor.prototype.receiveDamage = function(damage) {
   this.health -= damage;
 
   if(this.health <= 0){
+    if(this.isEnemy){
+      this.game.player.xpSystem.addXp(this.givesXP);
+    }
     console.log("dead!");
     this.destroy();
     this.healthBarShape.destroy();

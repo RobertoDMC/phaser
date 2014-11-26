@@ -1,7 +1,7 @@
 BasicGame.Enemy_Skeleton = function (game, x, y) {
   this.game = game;
   this.screenName = "Skeleton";
-  this.maxHealth = 1000;
+  this.maxHealth = 100;
 
   BasicGame.Actor.call(this, this.game, x, y, 'enemy-skeleton');
 
@@ -13,7 +13,8 @@ BasicGame.Enemy_Skeleton = function (game, x, y) {
   this.movementSpeed = 0.1;
   this.aggroRange = 300;
   this.damage = 1;
-
+  this.isEnemy = true;
+  this.givesXP = 105;
 };
 BasicGame.Enemy_Skeleton.prototype = Object.create(BasicGame.Actor.prototype);
 BasicGame.Enemy_Skeleton.prototype.constructor = BasicGame.Enemy_Skeleton;

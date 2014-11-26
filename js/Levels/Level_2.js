@@ -16,7 +16,6 @@ BasicGame.Level_2.prototype.create = function () {
 
   this.parentCreate();
 
-
 };
 
 BasicGame.Level_2.prototype.update = function () {

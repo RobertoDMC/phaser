@@ -1,26 +1,31 @@
 BasicGame.Hud = function(game){
   this.game = game;
-  this.scoreLabel = null;
   this.levelLabel = null;
   this.levelName = null;
+  this.playerLevelLabel = null;
+  this.playerXpLabel = null;
+  this.playerNextXpLabel = null;
+  this.font = {font: "12px Arial", fill: "#FFFFFF"};
 };
 
-BasicGame.Hud.prototype = {
+BasicGame.Hud.prototype.preload = function(){
+};
 
-  preload: function(){
-  },
+BasicGame.Hud.prototype.create =function(){
+  console.log(this.fontSize);
+  //level
+  this.levelLabel = this.game.add.text(6, 10, this.levelName, this.font);
+  this.playerLevelLabel = this.game.add.text(6, 30, "" + this.game.player.xpSystem.level, this.font);
+  this.playerXpLabel = this.game.add.text(6, 50, " " + this.game.player.xpSystem.xp + " / " + this.game.player.xpSystem.calculateNextLevelUpExperience(), this.font);
+};
 
-  create: function(){
-    //score
-    this.scoreLabel = this.game.add.text(16, 16, "", {fontSize: "32px", fill: "#333333"});
-    this.levelLabel = this.game.add.text(16, 40, this.levelName, {fontSize: "32px", fill: "#333333"});
-  },
+BasicGame.Hud.prototype.update =function() {
+  //player
+  this.playerLevelLabel.text = "Player level: " + this.game.player.xpSystem.level;
+  this.playerXpLabel.text = "XP: " + this.game.player.xpSystem.xp + " / " + this.game.player.xpSystem.nextLevelUpExperience;
+};
 
-  update: function(){
-    this.scoreLabel.text = "Score: " + this.game.player.getScore();
-  },
 
-  setLevelName: function(name){
-    this.levelName = name;
-  }
-}
+BasicGame.Hud.prototype.setLevelName = function(name){
+  this.levelName = name;
+};
