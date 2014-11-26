@@ -16,7 +16,6 @@ BasicGame.Preloader.prototype = {
 
     this.load.setPreloadSprite(this.preloadBar);
 
-    this.load.image('titlepage', 'images/title.jpg');
     this.load.image('bullet', 'images/bullet.png');
     this.load.image('specialBullet', 'images/specialBullet.png');
 

@@ -29,11 +29,10 @@ BasicGame.Actor.prototype.parentPreload = function(){
 
 BasicGame.Actor.prototype.parentCreate = function(){
   this.health = this.maxHealth;
-  console.log(this.screenName + " created");
 };
 
 BasicGame.Actor.prototype.parentUpdate = function(){
-  this.game.debug.body(this);
+  //this.game.debug.body(this);
 };
 
 BasicGame.Actor.prototype.move = function(){
@@ -143,9 +142,14 @@ BasicGame.Actor.prototype.receiveDamage = function(damage) {
     if(this.isEnemy){
       this.game.player.xpSystem.addXp(this.givesXP);
     }
-    console.log("dead!");
+
     this.destroy();
     this.healthBarShape.destroy();
+
+    if(!this.isEnemy){
+      //player is dead, game over
+      this.game.state.add('MainMenu');
+    }
   }
 };
 

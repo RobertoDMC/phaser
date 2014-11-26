@@ -49,10 +49,13 @@ BasicGame.Player.prototype.update = function () {
 
   this.parentUpdate();
   this.drawHealthBar();
-
   this.xpSystem.update();
+
+  //testing
+  //this.receiveDamage(100);
   //this.xpSystem.addXp(1);
 
+  //keys movement
   if (this.keys.leftKey.isDown) {
     // moving left
     this.body.velocity.x -= this.speed;

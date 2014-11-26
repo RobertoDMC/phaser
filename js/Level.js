@@ -24,7 +24,6 @@ BasicGame.Level.prototype.parentCreate = function () {
   this.map.addTilesetImage("dungeon_tileset");
   this.map.addTilesetImage("objects_tilset");
   //layers
-  /*
   this.mapLayerFloorAndWalls = this.map.createLayer("floor_and_walls");
   this.mapLayerDoors = this.map.createLayer("doors");
   this.mapLayerWallInventory = this.map.createLayer("wallinventory");
@@ -32,7 +31,7 @@ BasicGame.Level.prototype.parentCreate = function () {
   this.mapLayerObstacles = this.map.createLayer("obstacles");
   this.map.setCollisionBetween(9, 88, true, this.mapLayerFloorAndWalls);
   this.map.setCollision(Array(91, 198), true, this.mapLayerObstacles); //TODO: look at level2.json and Tiler => where do those ids come from?
-  */
+
 
   //this.mapLayerObstacles.debug = true;
   //map.setTileIndexCallback(255, this.awesomeEvent, this); // event if touching tile id 255
@@ -66,7 +65,6 @@ BasicGame.Level.prototype.createEnemies = function () {
 
   for (var i = 0; i < arEnemiesClassNames.length; i++) {
     var enemyClassName = arEnemiesClassNames[i];
-    console.log(enemyClassName);
     coordinateVal += 350;
     var enemy = new BasicGame[enemyClassName](this.game, -120, -120);
     enemy.anchor.setTo(0.5, 0.5);
