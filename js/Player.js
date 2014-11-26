@@ -18,7 +18,7 @@ BasicGame.Player = function (game, x, y) {
   //tweak these /level up these
   this.damage = 30;
   this.speed = 15;
-  this.countBullets = 1;
+  this.countBullets = 5;
   this.fireRate = 300;
   this.bodyDragX = 900; //more realistic movement / friction
   this.bodyDragY = 900; //more realistic movement / friction
