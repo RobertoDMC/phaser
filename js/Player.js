@@ -37,6 +37,7 @@ BasicGame.Player.prototype.create = function () {
   this.body.drag.x = this.bodyDragX;
   this.body.drag.y = this.bodyDragY;
   this.body.maxVelocity = this.maximumVelocity;
+  this.body.setSize(this.width, this.height / 2, 0, this.height / 2);
 
   //keyboard input
   this.createKeys();
