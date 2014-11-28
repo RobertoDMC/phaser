@@ -24,6 +24,10 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.lastMoveToY = null;
   this.lastRecalc = null; //last time the movement was recalculated
   this.secondsAfterRecalMoveTarget = 1;
+  this.randomSecondsBeforeRecalcMovement = 0.8;
+  this.minimumSecondsBeforeRecalcMovement = 1.8;
+  this.randomTimeNextDirectionChange = 0;
+
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -34,6 +38,8 @@ BasicGame.Actor.prototype.parentPreload = function(){
 
 BasicGame.Actor.prototype.parentCreate = function(){
   this.health = this.maxHealth;
+  this.timer = this.game.time.create(false);
+  this.timer.start();
 };
 
 BasicGame.Actor.prototype.parentUpdate = function(){
@@ -56,7 +62,7 @@ BasicGame.Actor.prototype.move = function(){
 
   //this.isAggro = false;
 
-  if(!this.lastMoveToX || this.isAggro || Math.round(this.timer.seconds) > this.secondsAfterRecalMoveTarget){
+  if( Math.round(this.timer.seconds) > this.randomTimeNextDirectionChange ){
 
     var randomMovementDistanceX = Math.round((Math.random() + 1) * this.minMovementDistanceX + this.minMovementDistanceX);
     var randomMovementDistanceY = Math.round(Math.random() * this.maxMovementDistanceY + this.minMovementDistanceX);
@@ -65,12 +71,14 @@ BasicGame.Actor.prototype.move = function(){
     var moveLeft = false;
     var moveUp = false;
 
+    this.randomTimeNextDirectionChange = (Math.random() * this.randomSecondsBeforeRecalcMovement + this.minimumSecondsBeforeRecalcMovement);
+
     if(this.timer){
       this.timer.destroy();
+      this.timer.seconds = 0;
     }
     this.timer = this.game.time.create(false);
     this.timer.start();
-
 
     if(Math.random() < 0.5){
       moveLeft = true;
@@ -124,10 +132,6 @@ BasicGame.Actor.prototype.move = function(){
     //this.movementTween = this.game.add.tween(this.body).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
     //this.movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
   }
-};
-
-BasicGame.Actor.prototype.between = function (number, min, max) {
-  return number > min && number < max;
 };
 
 BasicGame.Actor.prototype.tweenMovementEnd = function() {
