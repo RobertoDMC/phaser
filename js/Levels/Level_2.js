@@ -31,7 +31,11 @@ BasicGame.Level_2.prototype.update = function () {
   //physics
   //collision events
   this.game.physics.arcade.overlap(this.game.player, this.enemiesGroup, this.playerTouchingEnemy, null, this);
+  this.game.physics.arcade.overlap(this.game.enemiesGroup, this.mapLayerFloorAndWalls);
+  this.game.physics.arcade.overlap(this.game.enemiesGroup, this.mapLayerObstacles);
   this.game.physics.arcade.overlap(this.game.player.bulletsGroup, this.enemiesGroup, this.playerBulletTouchingEnemy, null, this);
+  this.game.physics.arcade.overlap(this.game.player.bulletsGroup, this.mapLayerFloorAndWalls, this.playerBulletTouchingTile, null, this);
+  this.game.physics.arcade.overlap(this.game.player.bulletsGroup, this.mapLayerObstacles, this.playerBulletTouchingTile, null, this);
   this.game.physics.arcade.collide(this.game.player, this.mapLayerFloorAndWalls);
   this.game.physics.arcade.collide(this.game.player, this.mapLayerObstacles);
 
@@ -39,7 +43,8 @@ BasicGame.Level_2.prototype.update = function () {
   //this.game.camera.follow(this.game.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
 
 };
-BasicGame.Level_2.prototype.playerBulletTouchingTile = function(){
+BasicGame.Level_2.prototype.playerBulletTouchingTile = function(bullet, tile){
+  bullet.kill();
   console.log("touching!!");
 };
 
