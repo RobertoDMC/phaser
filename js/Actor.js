@@ -6,7 +6,7 @@ BasicGame.Actor = function(game, x, y, imageRef){
 
   this.game.physics.arcade.enable(this);
   this.anchor.setTo(0.5, 0.5);
-  this.movementAnimationRunning = false;
+  //this.movementAnimationRunning = false;
   this.movementType = null;
   this.minMovementDistanceX = null;
   this.maxMovementDistanceY = null;
@@ -19,6 +19,11 @@ BasicGame.Actor = function(game, x, y, imageRef){
   this.healthBarShape = null;
   this.isEnemy = null;
   this.givesXP = null;
+  this.timer = null;
+  this.lastMoveToX = null;
+  this.lastMoveToY = null;
+  this.lastRecalc = null; //last time the movement was recalculated
+  this.secondsAfterRecalMoveTarget = 1;
 };
 
 BasicGame.Actor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -41,25 +46,31 @@ BasicGame.Actor.prototype.move = function(){
   var movementSpeed = this.movementSpeed;
   if(distanceToPlayer < this.aggroRange && !this.isAggro){
     this.isAggro = true;
-    if(this.movementTween) {
-      this.movementTween.stop();
-    }
-    this.movementAnimationRunning = false;
-  }else if(distanceToPlayer > this.aggroRange){
+    //this.movementAnimationRunning = false;
+  }else{
     this.isAggro = false;
   }
   if(this.isAggro) {
     movementSpeed *= 1.5;
   }
 
-  if(!this.movementAnimationRunning || this.isAggro){
-    var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + this.minMovementDistanceX;
-    var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY + this.minMovementDistanceX;
+  //this.isAggro = false;
+
+  if(!this.lastMoveToX || this.isAggro || Math.round(this.timer.seconds) > this.secondsAfterRecalMoveTarget){
+
+    var randomMovementDistanceX = Math.round((Math.random() + 1) * this.minMovementDistanceX + this.minMovementDistanceX);
+    var randomMovementDistanceY = Math.round(Math.random() * this.maxMovementDistanceY + this.minMovementDistanceX);
     var moveToX = this.x;
     var moveToY = this.y;
-    var movementTime = randomMovementDistanceX / movementSpeed;
     var moveLeft = false;
     var moveUp = false;
+
+    if(this.timer){
+      this.timer.destroy();
+    }
+    this.timer = this.game.time.create(false);
+    this.timer.start();
+
 
     if(Math.random() < 0.5){
       moveLeft = true;
@@ -106,15 +117,21 @@ BasicGame.Actor.prototype.move = function(){
       }
     }
 
-    this.movementAnimationRunning = true;
-    this.game.physics.arcade.moveToXY(this, moveToX, moveToY, 60, movementTime);
+    this.lastMoveToX = moveToX;
+    this.lastMoveToY = moveToY;
+    //this.movementAnimationRunning = true;
+    this.game.physics.arcade.moveToXY(this, moveToX, moveToY, movementSpeed);
     //this.movementTween = this.game.add.tween(this.body).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
     //this.movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
   }
 };
 
+BasicGame.Actor.prototype.between = function (number, min, max) {
+  return number > min && number < max;
+};
+
 BasicGame.Actor.prototype.tweenMovementEnd = function() {
-  this.movementAnimationRunning = false;
+  //this.movementAnimationRunning = false;
   if(this.body) {
     this.move();
   }
