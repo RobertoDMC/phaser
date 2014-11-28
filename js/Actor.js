@@ -52,9 +52,9 @@ BasicGame.Actor.prototype.move = function(){
     movementSpeed *= 1.5;
   }
 
-  if(!this.movementAnimationRunning){
-    var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX;
-    var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
+  if(!this.movementAnimationRunning || this.isAggro){
+    var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX + this.minMovementDistanceX;
+    var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY + this.minMovementDistanceX;
     var moveToX = this.x;
     var moveToY = this.y;
     var movementTime = randomMovementDistanceX / movementSpeed;
