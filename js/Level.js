@@ -11,8 +11,11 @@ BasicGame.Level.prototype.parentCreate = function () {
 
   //init
   this.chosenEnemies = Array();
-  this.enemiesGroup = Array();
+  this.enemiesGroup = null;
   this.mapLayerFloorAndWalls = null;
+  this.mapLayerDoors = null;
+  this.mapLayerWallInventory = null;
+  this.mapLayerObstaclesShadows = null;
 
   //hide preloader
   this.game.hidePreloadBar(this);

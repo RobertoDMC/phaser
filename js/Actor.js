@@ -51,6 +51,10 @@ BasicGame.Actor.prototype.move = function(){
   if(this.isAggro) {
     movementSpeed *= 1.5;
   }
+
+  //TODO: enable aggro!
+  this.isAggro = false;
+
   if(!this.movementAnimationRunning){
     var randomMovementDistanceX = (Math.random() + 1) * this.minMovementDistanceX;
     var randomMovementDistanceY = Math.random() * this.maxMovementDistanceY;
@@ -106,9 +110,9 @@ BasicGame.Actor.prototype.move = function(){
     }
 
     this.movementAnimationRunning = true;
-
-    this.movementTween = this.game.add.tween(this.body).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
-    this.movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
+    this.game.physics.arcade.moveToXY(this, moveToX, moveToY, 60, movementTime);
+    //this.movementTween = this.game.add.tween(this.body).to({ x: moveToX, y: moveToY }, movementTime, Phaser.Easing.Linear.None, true);
+    //this.movementTween.onComplete.addOnce(this.tweenMovementEnd, this);
   }
 };
 
